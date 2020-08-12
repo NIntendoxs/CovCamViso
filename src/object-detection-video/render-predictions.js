@@ -21,7 +21,7 @@ export const renderPredictions = (ctx, predictions) => {
     const height = prediction.bbox[3]
 
     const predictionText = getLabelText(prediction)
-
+    
     // Draw the bounding box.
     ctx.setStrokeStyle('#0062ff')
     ctx.setLineWidth(border)
@@ -55,5 +55,28 @@ export const renderPredictions = (ctx, predictions) => {
       Math.round(x - border / 2 + xPadding / 2),
       Math.round(y - (textHeight + yPadding) - offset + yPadding / 2)
     )
+  })
+  predictions.forEach((prediction) => {
+    var contr = 0
+    const etiqueta = prediction.label
+    const requestOptions = {
+      method: 'POST',
+      //headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ etiqueta })
+    };
+
+    
+    
+    if (etiqueta=='SinCubrebocas') {
+      fetch('http://192.168.50.167:1880/covid', requestOptions);
+      fetch('https://node-red-zpwtn.mybluemix.net/covid', requestOptions);
+      //contr=0;
+    } else {
+      //contr++;
+      //console.log(contr);
+    }
+    
+    console.log(etiqueta);
+  
   })
 }
